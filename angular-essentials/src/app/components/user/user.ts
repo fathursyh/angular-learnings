@@ -1,4 +1,4 @@
-import { Component, computed, input, Input } from '@angular/core';
+import { Component, computed, EventEmitter, input, Input, output, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -16,6 +16,14 @@ export class User {
     required: true,
   }) name!: string;
 
+  @Input({required: true}) id!: string;
+
+  // * new way event emitter
+  // select = output<string>()
+
+  // * old way event emitter
+  @Output() select = new EventEmitter<string>();
+
   // * new way signal computed property
   imagePath = computed(() => 'assets/users/' + this.avatar());
 
@@ -25,6 +33,6 @@ export class User {
   // }
 
   onSelectUser() {
-
+    this.select.emit(this.id);
   }
 }
