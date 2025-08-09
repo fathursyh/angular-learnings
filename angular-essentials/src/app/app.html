@@ -7,13 +7,14 @@
           [id]="user.id"
           [avatar]="user.avatar"
           [name]="user.name"
+          [selected]="user.id === selectedUser"
           (select)="onSelectUser($event)"
         />
       </li>
     }
   </ul>
   @if (selectedUserData) {
-    <app-tasks [name]="selectedUserData.name" />
+    <app-tasks [id]="selectedUserData.id" [name]="selectedUserData.name" />
   } @else {
     <p id="fallback">Select The User</p>
   }

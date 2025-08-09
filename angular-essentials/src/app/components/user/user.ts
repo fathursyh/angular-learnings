@@ -18,6 +18,8 @@ export class User {
 
   @Input({required: true}) id!: string;
 
+  @Input({required: true}) selected!: boolean;
+
   // * new way event emitter
   // select = output<string>()
 
