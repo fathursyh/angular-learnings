@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Task } from "./task/task";
-import { dummyTasks } from '../../dummy-tasks';
 import { NewTask } from "./new-task/new-task";
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -10,18 +10,15 @@ import { NewTask } from "./new-task/new-task";
   styleUrl: './tasks.css'
 })
 export class Tasks {
+  constructor(private taskService: TasksService) {}
   @Input() id?: string;
   @Input() name?: string;
   showAddModal = false;
-  tasks = dummyTasks;
 
   get selectedUserTasks() {
-    return this.tasks.filter(item => item.userId === this.id)
+    return this.taskService.getUserTasks(this.id!);
   }
 
-  handleCompleteTask(id: string) {
-    this.tasks = this.tasks.filter(item => item.id !== id);
-  }
   onClickAdd() {
     this.showAddModal = true;
   }
