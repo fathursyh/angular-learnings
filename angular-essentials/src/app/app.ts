@@ -6,9 +6,10 @@ import { Tasks } from './tasks/tasks';
 
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, User, Tasks],
+  // imports: [HeaderComponent, User, Tasks],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: false,
 })
 export class App {
   protected readonly title = signal('angular-essentials');
