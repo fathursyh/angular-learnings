@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output, output } from '@angular/core';
+import { Component, EventEmitter, Output, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InvestmentType } from '../type';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-user-input',
@@ -11,20 +12,36 @@ import { InvestmentType } from '../type';
 })
 export class UserInput {
   // ? newer
-  // calculate = output()
+  calculate = output<InvestmentType>()
   // ? older
-  @Output() calculate = new EventEmitter<InvestmentType>()
-  enteredInitialInvestment = '0';
-  annualInvestment = '0';
-  expectedReturn = '5';
-  duration = '10';
+  // @Output() calculate = new EventEmitter<InvestmentType>()
+
+  // ? old
+  // enteredInitialInvestment = '0';
+  // annualInvestment = '0';
+  // expectedReturn = '5';
+  // duration = '10';
+
+  // ? new
+  enteredInitialInvestment = signal('0');
+  annualInvestment = signal('0');
+  expectedReturn = signal('5');
+  duration = signal('10');
+
+  constructor(private investmentService: InvestmentService) {}
 
   onSubmit() {
-    this.calculate.emit({
-      initialInvestment: +this.enteredInitialInvestment,
-      annualInvestment: +this.annualInvestment,
-      expectedReturn: +this.expectedReturn,
-      duration: +this.duration,
+    this.investmentService.calculateInvestmentResults({
+      initialInvestment: +this.enteredInitialInvestment(),
+      annualInvestment: +this.annualInvestment(),
+      expectedReturn: +this.expectedReturn(),
+      duration: +this.duration(),
     });
+    // this.calculate.emit({
+    //   initialInvestment: +this.enteredInitialInvestment(),
+    //   annualInvestment: +this.annualInvestment(),
+    //   expectedReturn: +this.expectedReturn(),
+    //   duration: +this.duration(),
+    // });
   }
 }
